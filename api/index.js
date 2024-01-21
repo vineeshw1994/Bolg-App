@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 
 app.use('/api/user', userRoutes)
-app.use('/api/auth', authRoutes)
+app.use('/api/auth', authRoutes) 
 
 app.use((err, req, res, next)=>{
     const statusCode = err.statusCode || 500;
