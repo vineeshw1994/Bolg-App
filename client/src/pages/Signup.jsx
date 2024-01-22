@@ -2,6 +2,7 @@ import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { Link,useNavigate} from "react-router-dom";
 
 import { useState } from "react";
+import Oath from "./Oath";
 
 const Signup = () => {
   const [formData, setFormData] = useState({});
@@ -99,7 +100,7 @@ const Signup = () => {
               ) : 'Sign Up'}
             </Button>
 
-
+   <Oath />
           </form>
 
 

@@ -4,6 +4,7 @@ import { Link,useNavigate} from "react-router-dom";
 import { useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { signInSuccess,signInFailure,signInStart } from "../redux/user/UserSlice";
+import Oath from "./Oath";
 
 const Signin = () => {
   const [formData, setFormData] = useState({});
@@ -90,7 +91,7 @@ const Signin = () => {
                 </>
               ) : 'Sign In'}
             </Button>
-
+      <Oath />
 
           </form>
 
