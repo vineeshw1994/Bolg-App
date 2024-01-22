@@ -13,7 +13,7 @@ mongoose.connect(process.env.MONGO).then(()=>{
 })
 
 const app = express();
-app.use(express.json());
+app.use(express.json()); 
 
 app.use('/api/user', userRoutes)
 app.use('/api/auth', authRoutes) 

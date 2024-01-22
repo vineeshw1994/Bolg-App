@@ -40,7 +40,7 @@ const Signup = () => {
         setLoading(false)
 
         if(res.ok){ 
-    navigate('/home')
+    navigate('/sign-in')
         } 
 
     } catch (err) {
