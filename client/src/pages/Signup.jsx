@@ -68,8 +68,8 @@ const Signup = () => {
 
         {/* right side */}
 
-        <div className="flex-1">
-          <form onClick={handleSubmit} className="flex flex-col gap-4">
+        <div className="flex-1 border-2 rounded-lg p-5">
+          <form onClick={handleSubmit} className="flex flex-col gap-4 ">
             <div className="">
               <Label value="Your username" />
               <TextInput
