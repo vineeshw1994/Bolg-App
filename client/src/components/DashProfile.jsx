@@ -11,14 +11,12 @@ import { app } from "../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 const DashProfile = () => {
-
   const { currentUser } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const filePickRef = useRef(null);
   const [imageFileUploading, setImageFileUploading] = useState(null);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
-
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -41,7 +39,7 @@ const DashProfile = () => {
     //     }
     //   }
     // }
-    setImageFileUploadError(null)
+    setImageFileUploadError(null);
     const storage = getStorage(app);
     const fileName = new Date().getTime() + imageFile.name;
     const storageRef = ref(storage, fileName);
@@ -56,7 +54,7 @@ const DashProfile = () => {
       (error) => {
         setImageFileUploadError("could not upload(File must be less than 2MB)");
         setImageFileUploading(null);
-        setImageFile(null)
+        setImageFile(null);
         setImageFileUrl(null);
       },
       () => {
@@ -82,26 +80,31 @@ const DashProfile = () => {
           className="relative w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full"
           onClick={() => filePickRef.current.click()}
         >
-        {imageFileUploading && (
-          <CircularProgressbar value={imageFileUploading || 0} text={`${imageFileUploading}%`} strokeWidth={5}
-          styles={{
-            root:{
-              width:'100%',
-              height:'100%',
-              position:'absolute',
-              top:0,
-              left:'0'
-            },
-            path:{
-              stroke:`rgba(62,162,199, ${imageFileUploading / 100})`
-            }
-          }}
-          />
-        )}
+          {imageFileUploading && (
+            <CircularProgressbar
+              value={imageFileUploading || 0}
+              text={`${imageFileUploading}%`}
+              strokeWidth={5}
+              styles={{
+                root: {
+                  width: "100%",
+                  height: "100%",
+                  position: "absolute",
+                  top: 0,
+                  left: "0",
+                },
+                path: {
+                  stroke: `rgba(62,162,199, ${imageFileUploading / 100})`,
+                },
+              }}
+            />
+          )}
           <img
             src={imageFileUrl || currentUser.profilePicture}
             alt="user"
-            className={`rounded-full w-full h-full object-cover border-8 border-[lightgray] ${imageFileUploading && imageFileUploading < 100 && 'opacity-60'}` }
+            className={`rounded-full w-full h-full object-cover border-8 border-[lightgray] ${
+              imageFileUploading && imageFileUploading < 100 && "opacity-60"
+            }`}
           />
         </div>
         {imageFileUploadError && (
