@@ -1,4 +1,4 @@
-import { Alert, Button, TextInput,Modal } from "flowbite-react";
+import { Alert, Button, TextInput, Modal } from "flowbite-react";
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -10,11 +10,12 @@ import {
 import { app } from "../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { updateStart, updateSuccess, updateFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure,signoutSuccess,signoutFailure } from "../redux/user/UserSlice";
+import { updateStart, updateSuccess, updateFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure, signoutSuccess, signoutFailure } from "../redux/user/UserSlice";
 import { Model } from "mongoose";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { Link } from "react-router-dom";
 const DashProfile = () => {
-  const { currentUser, error } = useSelector((state) => state.user);
+  const { currentUser, error, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
@@ -123,45 +124,45 @@ const DashProfile = () => {
   }
 
   const handleDeleteUser = async () => {
-   setShowModel(false);
+    setShowModel(false);
 
-   try { 
+    try {
       dispatch(deleteUserStart());
       console.log(currentUser._id);
       const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-         method: 'DELETE',
+        method: 'DELETE',
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-         dispatch(deleteUserFailure(data.message));
+        dispatch(deleteUserFailure(data.message));
       } else {
-         dispatch(deleteUserSuccess(data));
+        dispatch(deleteUserSuccess(data));
       }
-   } catch (err) {
+    } catch (err) {
       dispatch(deleteUserFailure(err.message));
-   }
-};
+    }
+  };
 
 
-const handleSignout = async() =>{
-  try{
-   const res = await fetch('/api/user/signout',{
-    method: 'POST',
-   })
-   const data = await res.json();
-   if(!data.ok){
-    // dispatch(signoutFailure(data.message))
-    console.log(data.message)
-   }else{
-    dispatch(signoutSuccess(data))
-   }
-  }catch(error){
-    // dispatch(signoutFailure(error.message))
-    console.log(error.message)
+  const handleSignout = async () => {
+    try {
+      const res = await fetch('/api/user/signout', {
+        method: 'POST',
+      })
+      const data = await res.json();
+      if (!data.ok) {
+        // dispatch(signoutFailure(data.message))
+        console.log(data.message)
+      } else {
+        dispatch(signoutSuccess(data))
+      }
+    } catch (error) {
+      // dispatch(signoutFailure(error.message))
+      console.log(error.message)
+    }
   }
-}
 
 
   return (
@@ -225,12 +226,31 @@ const handleSignout = async() =>{
           onChange={handleChange}
         />
         <TextInput type="password" id="password" placeholder="password" onChange={handleChange} />
-        <Button type="submit" gradientDuoTone="purpleToBlue" outline>
-          Update
+        <Button type="submit" gradientDuoTone="purpleToBlue" outline
+          disabled={loading || imageFileUpload}
+        >
+          {loading ? 'loading...' : 'Update'}
         </Button>
+        {
+           currentUser.isAdmin && (
+          <Link to={'/create-post'}>
+           
+            <Button
+              type="button"
+              gradientDuoTone='purpleToPink'
+              className="w-full"
+              outline
+
+            >
+              Create a post
+            </Button>
+            
+          </Link>
+
+        )}
       </form>
       <div className="text-red-700 flex justify-between mt-5">
-        <span onClick={()=> setShowModel(true)} className="cursor-pointer ">Delete Account</span>
+        <span onClick={() => setShowModel(true)} className="cursor-pointer ">Delete Account</span>
         <span onClick={handleSignout} className="cursor-pointer ">Sign Out</span>
       </div>
       {
@@ -254,15 +274,15 @@ const handleSignout = async() =>{
           </Alert>
         )
       }
-      <Modal show={showModel} onClose={()=> setShowModel(false)} popup size='md'>
-        <Modal.Header/>
+      <Modal show={showModel} onClose={() => setShowModel(false)} popup size='md'>
+        <Modal.Header />
         <Modal.Body>
           <div className="text-center">
             <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
             <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400"></h3>
             <div className="flex justify-center gap-4">
               <Button color="failure" onClick={handleDeleteUser}>Yes, i am sure</Button>
-              <Button color="gray" onClick={()=> setShowModel(false)}>No, cancel</Button>
+              <Button color="gray" onClick={() => setShowModel(false)}>No, cancel</Button>
             </div>
           </div>
         </Modal.Body>
