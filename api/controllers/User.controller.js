@@ -1,7 +1,7 @@
 import { errorHandler } from "../utils/error.js"
 import bcrypt from 'bcryptjs'
 import User from '../models/User.model.js'
-
+ 
 export const test = (req, res) => {
    res.json({ message: 'this is the testing API' })
 }
@@ -73,12 +73,10 @@ export const deleteUser = async (req, res, next) => {
 
 export const signout = (req, res, next) => {
    console.log('this is signout')
-   try {
-      res
-      .clearCookie('access_token')
-      .status(200)
-      .json('User has been signed out');
+   try { 
+      res.clearCookie('access_token').status(200).json('signout success')
    } catch (error) {
       next(error)
    }
 }
+

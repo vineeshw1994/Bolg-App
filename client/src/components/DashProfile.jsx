@@ -10,8 +10,7 @@ import {
 import { app } from "../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { updateStart, updateSuccess, updateFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure, signoutSuccess, signoutFailure } from "../redux/user/UserSlice";
-import { Model } from "mongoose";
+import { updateStart, updateSuccess, updateFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure, signoutSuccess } from "../redux/user/UserSlice";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
 const DashProfile = () => {
@@ -68,7 +67,7 @@ const DashProfile = () => {
         setImageFileUploading(progress.toFixed(0));
       },
       (error) => {
-        setImageFileUploadError("could not upload(File must be less than 2MB)");
+        setImageFileUploadError("could not upload(File must be less than 2MB)",error);
         setImageFileUploading(null);
         setImageFile(null);
         setImageFileUrl(null);
@@ -152,9 +151,11 @@ const DashProfile = () => {
         method: 'POST',
       })
       const data = await res.json();
+      console.log(data)
+      dispatch(signoutSuccess(data))
       if (!data.ok) {
         // dispatch(signoutFailure(data.message))
-        console.log(data.message)
+        console.log('this is message',data.message)
       } else {
         dispatch(signoutSuccess(data))
       }
