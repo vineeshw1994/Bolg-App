@@ -12,7 +12,7 @@ export const verifyToken = (req, res, next) => {
             return next(errorHandler(401, 'Unauthorized'))
         }
         console.log('this is the user ', user)
-        req.user = user
-        next()
+        req.user = user 
+        next() 
     })
 }

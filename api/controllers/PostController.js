@@ -108,4 +108,20 @@ export const getposts = async (req, res, next) => {
     console.log(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-};
+}; 
+
+ 
+export const deletePost = async (req, res,next) => {
+  console.log('this is the post delete')
+  console.log(req.params.userId,req.user.id)
+  if(!req.user.isAdmin || req.user.id !== req.params.userId){
+    return next(errorHandler(403, "You are not allowed to delete this post"))
+  }
+
+  try{
+    await Post.findByIdAndDelete(req.params.postId)
+    res.status(200).json({message: "Post deleted successfully"})
+  }catch(error){
+    next(error)
+  }
+}
