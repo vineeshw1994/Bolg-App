@@ -79,6 +79,9 @@ export const getposts = async (req, res, next) => {
     if (req.query.postId) {
       filter._id = req.query.postId;
     }
+    // if (req.query.slug) { 
+    //   filter._id = req.query.slug;
+    // }
 
     if (req.query.searchTerm) {
       filter.$or = [
@@ -88,7 +91,7 @@ export const getposts = async (req, res, next) => {
     }
 
     const posts = await Post.find(filter)
-      .sort({ updatedAt: sortDirection })
+      .sort({ updatedAt: sortDirection }) 
       .skip(startIndex)
       .limit(limit);
 
