@@ -54,14 +54,15 @@ const DashUsers = () => {
   const handleDeleteUser = async () => {
     setShowModel(false)
     try {
-      const res = await fetch(`/api/user/deleteuser/${userIdToDelete}/${currentUser._id}`, { method: "DELETE" })
+      const res = await fetch(`/api/user/delete/${userIdToDelete}`, { method: "DELETE" })
       const data = await res.json()
-      if (!res.ok) {
-        console.log(data.message)  
-      } else {
-        setUsers((prev) => prev.filter((post) => post._id !== userIdToDelete) 
+      if (res.ok) {
+        setUsers((prev) => prev.filter((user) => user._id !== userIdToDelete) 
         )
-      }
+        setShowModel(false)
+      }else{
+        console.log(data.message)
+      } 
     } catch (error) { 
       console.log(error.message)
     }
