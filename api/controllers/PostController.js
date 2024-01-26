@@ -1,6 +1,5 @@
 import { errorHandler } from "../utils/error.js"
 import Post from "../models/Post.model.js"
-import { find } from "ramda"
 export const create = async (req, res, next) => {
   console.log('this is the post create')
 

@@ -10,7 +10,7 @@ const CallToAction = () => {
             <a href="https:www./100jsprojects.com" target="_blank" rel="noopener noreferrer" >100 JavaScript Projects</a>
         </Button>
        </div> 
-       <div className="p-7 flex-1">
+       <div className="p-7 flex-1"> 
          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn_Kxvd0bLox52AODzNOsTiN84SK_qEvqBkZ_iZFbrqP0z5Bk8wrTTSDMvkWmwMmYV2iY&usqp=CAU"  />
        </div> 
     </div>

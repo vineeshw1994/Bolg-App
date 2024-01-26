@@ -27,6 +27,9 @@ export const signup = async (req, res, next) => {
 
 
 export const signin = async (req, res, next) => {
+
+   console.log('this is the sign in function')
+   
    const { email, password } = req.body
 
    if (!email || !password || email === '' || password === '') {

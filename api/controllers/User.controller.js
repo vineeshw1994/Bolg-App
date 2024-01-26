@@ -1,7 +1,7 @@
 import { errorHandler } from "../utils/error.js"
 import bcrypt from 'bcryptjs'
 import User from '../models/User.model.js'
- 
+
 export const test = (req, res) => {
    res.json({ message: 'this is the testing API' })
 }
@@ -20,10 +20,8 @@ export const updateUser = async (req, res, next) => {
       }
       req.body.password = bcrypt.hashSync(req.body.password, 10)
    }
-   console.log('here is username checking')
    console.log(req.body.username, req.body.email)
    if (req.body.username) {
-      console.log('this is username length checking')
       if (req.body.username.length < 7 || req.body.username.length > 15) {
          return next(errorHandler(400, 'username must be between 7 and 15 characters'))
       } console.log('this is empty space checking')
@@ -32,7 +30,8 @@ export const updateUser = async (req, res, next) => {
       }
       if (req.body.username !== req.body.username.toLowerCase()) {
          return next(errorHandler(400, 'username must be lowercase'))
-      } console.log('this is character checking')
+      } 
+      console.log('this is character checking')
       if (!req.body.username.match(/^[a-zA-Z0-9]+$/)) {
          return next(errorHandler(400, 'username can only contain letters and numbers'))
       }
@@ -72,7 +71,7 @@ export const deleteUser = async (req, res, next) => {
 
 export const signout = (req, res, next) => {
    console.log('this is signout')
-   try { 
+   try {
       res.clearCookie('access_token').status(200).json('signout success')
    } catch (error) {
       next(error)
@@ -80,38 +79,38 @@ export const signout = (req, res, next) => {
 }
 
 export const getUsers = async (req, res, next) => {
-   if(!req.user.isAdmin){
+   if (!req.user.isAdmin) {
       return next(errorHandler(403, 'You are not allowed to see all users'))
    }
 
-   try{
-     const startIndex = parseInt(req.query.startIndex) || 0;
-     const limit = parseInt(req.query.limit) || 10;
-     const sortDirection = req.query.sort === 'asc' ? 1 : -1;
+   try {
+      const startIndex = parseInt(req.query.startIndex) || 0;
+      const limit = parseInt(req.query.limit) || 10;
+      const sortDirection = req.query.sort === 'asc' ? 1 : -1;
 
-     const users = await User.find()
-     .sort({ createdAt: sortDirection })
-     .skip(startIndex)
-     .limit(limit);
+      const users = await User.find()
+         .sort({ createdAt: sortDirection })
+         .skip(startIndex)
+         .limit(limit);
 
-     const userWithoutPassword = users.map((user) =>{
-      const {password, ...rest} = user._doc;
-      return rest;
-     })
+      const userWithoutPassword = users.map((user) => {
+         const { password, ...rest } = user._doc;
+         return rest;
+      })
 
-     const totalUsers = await User.countDocuments();
+      const totalUsers = await User.countDocuments();
 
-     const now = new Date()
-     const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate())
-       
-    const lastMonthUsers = await User.countDocuments({ createdAt: { $gte: oneMonthAgo } }); 
+      const now = new Date()
+      const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate())
 
-    res.status(200).json({
-      users:userWithoutPassword,
-      totalUsers,
-      lastMonthUsers
-    })
-   }catch(error){
+      const lastMonthUsers = await User.countDocuments({ createdAt: { $gte: oneMonthAgo } });
+
+      res.status(200).json({
+         users: userWithoutPassword,
+         totalUsers,
+         lastMonthUsers
+      })
+   } catch (error) {
       next(error)
    }
 }
