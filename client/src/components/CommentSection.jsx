@@ -75,6 +75,14 @@ const CommentSection = ({ postId }) => {
       console.log(error.message);
     }
   }
+
+  const handleEdit = (comment, editedContent) =>{
+    setComments(
+      comments.map((c) => 
+    c._id === comment._id ? {...c, content:editedContent} : c
+      )
+    )
+  }
   return (
     <div className="max-w-2xl mx-auto w-full p-3">
       {currentUser ? (
@@ -142,7 +150,7 @@ const CommentSection = ({ postId }) => {
           {
             comments.map((comment) => {
               return (
-                <Comment onLike={handleLike} key={comment._id} comment={comment} />
+                <Comment onLike={handleLike} key={comment._id} comment={comment} onEdit={handleEdit} />
               )
             })
           }
