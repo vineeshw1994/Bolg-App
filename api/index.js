@@ -7,16 +7,16 @@ import postRoutes from './routes/Post.route.js';
 import commentRoutes from './routes/Comment.route.js';
 import cookieParser from 'cookie-parser';
 
-dotenv.config(); 
+dotenv.config();  
 
 mongoose.connect(process.env.MONGO).then(()=>{
     console.log('mongodb is connected')
 }).catch((err)=>{
     console.log(err)
 })
-
-const app = express();
-
+ 
+const app = express(); 
+  
 app.use(express.json());
 app.use(cookieParser()) 
 

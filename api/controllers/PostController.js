@@ -78,9 +78,9 @@ export const getposts = async (req, res, next) => {
     if (req.query.postId) {
       filter._id = req.query.postId;
     }
-    // if (req.query.slug) { 
-    //   filter._id = req.query.slug;
-    // }
+    if (req.query.slug) { 
+      filter.slug = req.query.slug;
+    }
 
     if (req.query.searchTerm) {
       filter.$or = [
