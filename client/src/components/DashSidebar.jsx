@@ -1,6 +1,6 @@
 import { Sidebar } from "flowbite-react"
 import { useEffect, useState } from "react"
-import { HiArrowSmRight, HiDocumentText, HiOutlineUserGroup, HiUser,HiChatAlt2 } from "react-icons/hi"
+import { HiArrowSmRight, HiDocumentText, HiOutlineUserGroup, HiUser, HiChatAlt2, HiChartPie } from "react-icons/hi"
 import { Link, useLocation } from "react-router-dom"
 import { signoutSuccess } from "../redux/user/UserSlice"
 import { useDispatch, useSelector } from "react-redux"
@@ -43,34 +43,43 @@ const DashSidebar = () => {
     <Sidebar className="w-full md:w-56" >
       <Sidebar.Items>
         <Sidebar.ItemGroup className="flex flex-col gap-1">
+
+          {currentUser && currentUser.isAdmin && (
+            <Link to={'/dashboard?tab=dash'}>
+              <Sidebar.Item active={tab === 'dash' || !tab} icon={HiChartPie} className='cursor-pointer' as='div'>
+                Dashboard
+              </Sidebar.Item>
+            </Link>
+          )}
+
           <Link to={'/dashboard?tab=profile'}>
             <Sidebar.Item active={tab === 'profile'} icon={HiUser} label={currentUser.isAdmin ? 'Admin' : 'User'} labelColor='dark' className='cursor-pointer' as='div'>
               Profile
             </Sidebar.Item>
           </Link>
-          
+
           {currentUser.isAdmin && (
             <Link to={'/dashboard?tab=posts'}>
-            <Sidebar.Item active={tab === 'posts'} icon={HiDocumentText}  className='cursor-pointer' as='div'>
-             Posts
-            </Sidebar.Item>
-          </Link>
+              <Sidebar.Item active={tab === 'posts'} icon={HiDocumentText} className='cursor-pointer' as='div'>
+                Posts
+              </Sidebar.Item>
+            </Link>
           )}
           {currentUser.isAdmin && (
             <Link to={'/dashboard?tab=users'}>
-            <Sidebar.Item active={tab === 'users'} icon={HiOutlineUserGroup}  className='cursor-pointer' as='div'>
-             Users
-            </Sidebar.Item>
-          </Link>
+              <Sidebar.Item active={tab === 'users'} icon={HiOutlineUserGroup} className='cursor-pointer' as='div'>
+                Users
+              </Sidebar.Item>
+            </Link>
           )}
           {currentUser.isAdmin && (
             <Link to={'/dashboard?tab=comments'}>
-            <Sidebar.Item active={tab === 'comments'} icon={HiChatAlt2}  className='cursor-pointer' as='div'>
-             Comments
-            </Sidebar.Item>
-          </Link>
+              <Sidebar.Item active={tab === 'comments'} icon={HiChatAlt2} className='cursor-pointer' as='div'>
+                Comments
+              </Sidebar.Item>
+            </Link>
           )}
-          
+
           <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}  >
             Sign Out
           </Sidebar.Item>
