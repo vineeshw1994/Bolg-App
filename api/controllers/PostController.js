@@ -17,7 +17,7 @@ export const create = async (req, res, next) => {
     const savedPost = await newPost.save()
     res.status(201).json(savedPost)
   } catch (err) {
-    console.log(err.message)
+    next(err)
   }
 } 
 
@@ -68,7 +68,7 @@ export const getposts = async (req, res, next) => {
     const filter = {};
 
     if (req.query.userId) {
-      filter.userId = req.query.userId;
+      filter.userId = req.query.userId; 
     }
 
     if (req.query.category) {
@@ -79,7 +79,7 @@ export const getposts = async (req, res, next) => {
       filter._id = req.query.postId;
     }
     if (req.query.slug) { 
-      filter.slug = req.query.slug;
+      filter.slug = req.query.slug;  
     }
 
     if (req.query.searchTerm) {
@@ -89,7 +89,7 @@ export const getposts = async (req, res, next) => {
       ];
     }
 
-    const posts = await Post.find(filter)
+    const posts = await Post.find(filter) 
       .sort({ updatedAt: sortDirection }) 
       .skip(startIndex)
       .limit(limit);
