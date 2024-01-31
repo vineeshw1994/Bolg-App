@@ -32,3 +32,20 @@ body{
 .dark .post-content a{
     color: red;
 }
+
+.post-content img{
+  width: 150px;
+  height: 120px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.post-content h3{
+    background-color: rgb(49, 44, 44);
+    padding: 4px 17px;
+    color: whitesmoke;
+    font-size: medium;
+    font-weight: 500;
+    border-radius: 8px;
+    width: 800px;
+    margin-right: 17px;}

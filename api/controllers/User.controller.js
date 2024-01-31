@@ -36,14 +36,18 @@ export const updateUser = async (req, res, next) => {
          return next(errorHandler(400, 'username can only contain letters and numbers'))
       }
    }
-   try {
+   try { 
       console.log('hey this is update user')
+      const newImage = new Image({ 
+         profilePic: req.file.filename, 
+        
+     });
       const updatedUser = await User.findByIdAndUpdate(req.params.userId, {
          $set: {
             username: req.body.username,
             email: req.body.email,
             profilePicture: req.body.profilePicture,
-            password: req.body.password
+            password: profilePic,
          }
       }, { new: true })
 

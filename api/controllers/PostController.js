@@ -13,13 +13,18 @@ export const create = async (req, res, next) => {
 
   const newPost = new Post({ ...req.body, slug, userId: req.user.id })
 
+
+  const  image  = req.file 
+
+  console.log(image, 'this is the image file')
+
   try {
     const savedPost = await newPost.save()
     res.status(201).json(savedPost)
   } catch (err) {
     next(err)
   }
-} 
+}
 
 // export const getposts = async (req, res, next) => {
 //   console.log('this is the post get')
@@ -38,7 +43,7 @@ export const create = async (req, res, next) => {
 //           { content: { $regex: req.query.searchTerm, $options: 'i' } }
 //         ]
 //       })  
- 
+
 //     ).sort({ updateAt: sortDirection }).skip(startIndex).limit(limit)
 
 //     const totalPosts = await Post.countDocuments()
@@ -62,13 +67,13 @@ export const getposts = async (req, res, next) => {
   console.log('this is the post get')
   try {
     const startIndex = parseInt(req.query.startIndex) || 0
-    const limit = parseInt(req.query.limit) || 9
+    const limit = parseInt(req.query.limit) || 8
     const sortDirection = req.query.order === 'asc' ? 1 : -1
-    
+
     const filter = {};
 
     if (req.query.userId) {
-      filter.userId = req.query.userId; 
+      filter.userId = req.query.userId;
     }
 
     if (req.query.category) {
@@ -78,8 +83,8 @@ export const getposts = async (req, res, next) => {
     if (req.query.postId) {
       filter._id = req.query.postId;
     }
-    if (req.query.slug) { 
-      filter.slug = req.query.slug;  
+    if (req.query.slug) {
+      filter.slug = req.query.slug;
     }
 
     if (req.query.searchTerm) {
@@ -89,8 +94,8 @@ export const getposts = async (req, res, next) => {
       ];
     }
 
-    const posts = await Post.find(filter) 
-      .sort({ updatedAt: sortDirection }) 
+    const posts = await Post.find(filter)
+      .sort({ updatedAt: sortDirection })
       .skip(startIndex)
       .limit(limit);
 
@@ -110,43 +115,44 @@ export const getposts = async (req, res, next) => {
     console.log(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-}; 
+};
 
- 
-export const deletePost = async (req, res,next) => {
+
+export const deletePost = async (req, res, next) => {
   console.log('this is the post delete')
-  console.log(req.params.userId,req.user.id)
-  if(!req.user.isAdmin || req.user.id !== req.params.userId){
+  console.log(req.params.userId, req.user.id)
+  if (!req.user.isAdmin || req.user.id !== req.params.userId) {
     return next(errorHandler(403, "You are not allowed to delete this post"))
   }
 
-  try{
+  try {
     await Post.findByIdAndDelete(req.params.postId)
-    res.status(200).json({message: "Post deleted successfully"})
-  }catch(error){
+    res.status(200).json({ message: "Post deleted successfully" })
+  } catch (error) {
     next(error)
   }
-} 
+}
 
 
-export const updatePost = async(req,res,next) =>{
- if(!req.user.isAdmin || req.user.id !== req.params.userId){
-  return next(errorHandler(403, "You are not allowed to update this post"))
- }
- console.log('this is the update function')
-  try{
-   const updatedPost = await Post.findByIdAndUpdate(
-    req.params.postId,{
-      $set:{
-        title:req.body.title,
-        content:req.body.content,
-        category:req.body.category,
-        image:req.body.image,
+export const updatePost = async (req, res, next) => {
+  if (!req.user.isAdmin || req.user.id !== req.params.userId) {
+    return next(errorHandler(403, "You are not allowed to update this post"))
+  }
+  console.log('this is the update function')
+  console.log('this is the postId', req.params.postId)
+  try {
+    const updatedPost = await Post.findByIdAndUpdate(
+      req.params.postId, {
+      $set: {
+        title: req.body.title,
+        content: req.body.content,
+        category: req.body.category,
+        image: req.body.image,
       }
-    },{new:true}
-   )
-   res.status(200).json(updatedPost)
-  }catch(error){
-   next(error)
+    }, { new: true }
+    )
+    res.status(200).json(updatedPost)
+  } catch (error) {
+    next(error)
   }
 }

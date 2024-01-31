@@ -19,7 +19,7 @@ const UpdatePost = () => {
   const [formData, setFormData] = useState({})
   const [publishError, setPublishError] = useState(null)
   const {postId} = useParams()
-  console.log(formData)
+ 
   
  useEffect(() =>{
    try{
@@ -87,7 +87,7 @@ const UpdatePost = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const res = await fetch(`/api/post/updatepost/${formData._id}/${currentUser._id}`, {
+      const res = await fetch(`/api/post/updatepost/${postId}/${currentUser._id}`, {
         method: 'PUT',
         headers: {
           'content-Type': 'application/json'
