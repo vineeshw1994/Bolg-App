@@ -4,7 +4,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon,FaSun } from "react-icons/fa";
 import {  useDispatch, useSelector, } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
-import {  signoutSuccess } from "../redux/user/UserSlice";
+import {  signoutSuccess } from "../redux/user/UserSlice.js";
 import { useEffect, useState } from "react";
 
 const Header = () => {

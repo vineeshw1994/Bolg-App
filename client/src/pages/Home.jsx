@@ -43,7 +43,7 @@ const Home = () => {
             <h2 className="text-2xl font-semibold text-center m-5">Recent Posts</h2>
             <div className=" flex flex-wrap gap-4">
               {posts.map((post) => {
-                return <PostCard key={posts._id} post={post} />;
+                return <PostCard key={post._id} post={post} />;
               })}
             </div>
             <Link to={'/search'} className="text-teal-500 text-lg hover:underline text-center">

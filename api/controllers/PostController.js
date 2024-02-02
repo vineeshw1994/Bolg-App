@@ -3,6 +3,7 @@ import Post from "../models/Post.model.js"
 export const create = async (req, res, next) => {
   console.log('this is the post create')
 
+
   if (!req.user.isAdmin) {
     return next(errorHandler(400, "Admin resource. Access denied"))
   }
@@ -14,12 +15,10 @@ export const create = async (req, res, next) => {
   const newPost = new Post({ ...req.body, slug, userId: req.user.id })
 
 
-  const  image  = req.file 
-
-  console.log(image, 'this is the image file')
+ 
 
   try {
-    const savedPost = await newPost.save()
+    const savedPost = await newPost.save()  
     res.status(201).json(savedPost)
   } catch (err) {
     next(err)

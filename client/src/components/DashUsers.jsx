@@ -91,7 +91,7 @@ const DashUsers = () => {
                     <Link to={`/post/${user.slug}`}>
                       <img
                         src={user.profilePicture}
-                        alt={user.username}
+                        alt=''
                         className="w-12 h-10 object-cover bg-gray-500 rounded-full dark:bg-gray-800"
                       />
                     </Link>

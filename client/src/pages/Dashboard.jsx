@@ -42,6 +42,10 @@ const Dashboard = () => {
    {/* dashboard comp */}
    {tab === 'dash' && <div><DashboardComp /></div>}
 
+   {/* category */}
+   {/* {tab === 'categorys' && <div><Categorys /></div>} */}
+
+
     </div>
   )
 }

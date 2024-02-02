@@ -79,6 +79,13 @@ const DashSidebar = () => {
               </Sidebar.Item>
             </Link>
           )}
+          {/* {currentUser.isAdmin && (
+            <Link to={'/dashboard?tab=categorys'}>
+              <Sidebar.Item active={tab === 'categorys'} icon={HiCollection} className='cursor-pointer' as='div'>
+                Category
+              </Sidebar.Item>
+            </Link>
+          )} */}
 
           <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}  >
             Sign Out
