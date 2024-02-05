@@ -1,5 +1,10 @@
 import { errorHandler } from "../utils/error.js"
 import Post from "../models/Post.model.js"
+import Category from "../models/category.model.js"
+
+
+
+
 export const create = async (req, res, next) => {
   console.log('this is the post create')
 
@@ -155,3 +160,5 @@ export const updatePost = async (req, res, next) => {
     next(error)
   }
 }
+
+

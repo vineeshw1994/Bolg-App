@@ -1,4 +1,4 @@
-import { Alert, Button, FileInput, Select, TextInput } from 'flowbite-react';
+import { Alert, Button, FileInput, TextInput } from 'flowbite-react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {
@@ -8,10 +8,11 @@ import {
   uploadBytesResumable,
 } from 'firebase/storage';
 import { app } from '../firebase';
-import { useState } from 'react';
+import {  useState } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useNavigate } from 'react-router-dom';
+
 
 export default function CreatePost() {
   const [file, setFile] = useState(null);
@@ -20,7 +21,12 @@ export default function CreatePost() {
   const [formData, setFormData] = useState({});
   const [publishError, setPublishError] = useState(null);
 
+
   const navigate = useNavigate();
+
+
+ 
+
 
   const handleUpdloadImage = async () => {
     try {
@@ -82,6 +88,7 @@ export default function CreatePost() {
       setPublishError('Something went wrong');
     }
   };
+
   return (
     <div className='p-3 max-w-3xl mx-auto min-h-screen'>
       <h1 className='text-center text-3xl my-7 font-semibold'>Create a post</h1>
@@ -97,16 +104,31 @@ export default function CreatePost() {
               setFormData({ ...formData, title: e.target.value })
             }
           />
-          <Select
+
+          <TextInput 
+            type='text'
+            placeholder='Category'
+            required
+            id='category'
+            className='flex-0'
             onChange={(e) =>
               setFormData({ ...formData, category: e.target.value })
             }
+          />
+
+          {/* <Button onClick={() => {
+                      setShowModel(true)
+                    }}>Add Category </Button> */}
+          {/* <Select
+            onChange={(e) =>
+              setFormData({ ...formData, category: e.target.value })
+            }
+            
           >
-            <option value='uncategorized'>Select a category</option>
-            <option value='javascript'>JavaScript</option>
-            <option value='reactjs'>React.js</option>
-            <option value='nextjs'>Next.js</option>
-          </Select>
+          {categorys && categorys.map((cate) =>(
+             <option key={cate._id} value={cate.category}>{cate.category}</option>
+          ) )}
+          </Select> */}
         </div>
         <div className='flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3'>
           <FileInput
@@ -160,6 +182,9 @@ export default function CreatePost() {
           </Alert>
         )}
       </form>
+
+
+      
     </div>
   );
 }
